@@ -2,11 +2,7 @@
 <p>程序主要分pc/pi两部分</p>pi/
 <p>视觉处理端运行pc/main</p>
 <p>树莓派端运行pi/main</p>
-<code>
-```
-  pip install -r requirements.txt
-```
-code>
+<code>pip install -r requirements.txt<code>
 =======
 还在改进:(
 
