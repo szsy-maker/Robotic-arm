@@ -3,8 +3,7 @@ import numpy as np
 import mediapipe as mp
 import time
 import math
-import socket
-import pickle
+
 # Initialize
 
 num = 0
@@ -71,21 +70,18 @@ def distance(d1, d2):
     distance_12 = math.sqrt(((f1[0] - f2[0]) ** 2) + ((f1[0] - f2[0]) ** 2))
     return distance_12
 
-
 # 模型初始化
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hand = mp.solutions.hands
 
-# socket初始化
-wan1 = Socket("0.0.0.0", 12345)
-wan1.Setup()
-# 同步记得改7个
 
 # 默认摄像头为零
 cap = cv2.VideoCapture(0)
 
-with mp_hand.Hands(min_detection_confidence=0.3) as holistic:
+with mp_hand.Hands(min_detection_confidence=0.7,
+                   max_num_hands=1,
+                   min_tracking_confidence=0.7) as holistic:
     while cap.isOpened and state_code:
         # time
         start = time.time()
@@ -106,31 +102,6 @@ with mp_hand.Hands(min_detection_confidence=0.3) as holistic:
             mp_drawing.draw_landmarks(image, RHL, mp_hand.HAND_CONNECTIONS)
             # test_old
             # 计算角度
-            for joint in joint_list:
-                a = np.array([RHL.landmark[joint[0]].x, RHL.landmark[joint[0]].y])
-                b = np.array([RHL.landmark[joint[1]].x, RHL.landmark[joint[1]].y])
-                c = np.array([RHL.landmark[joint[2]].x, RHL.landmark[joint[2]].y])
-                # 计算弧度
-                radians_fingers = np.arctan2(c[1] - b[1], c[0] - b[0]) - np.arctan2(a[1] - b[1], a[0] - b[0])
-                angle = np.abs(radians_fingers * 180.0 / np.pi)  # 弧度转角度
-
-                if joint != [4, 3, 2]:
-                    if angle > 180.0:
-                        angle = 360 - angle
-                state_list[joint_list.index(joint)] = int(angle)
-
-                identify_state()
-                identify_direction()
-                wan1.Socket_sever(state_list)
-                """
-                print(state_list)
-                print("食指{}，中指{}，无名指{}，小拇指{}，大拇指{}".format(state_list[0],state_list[1],state_list)[2],state_list[3],state_list[4])
-
-                """
-
-                cv2.putText(image, str(round(angle, 2)), tuple(np.multiply(b, [640, 480]).astype(int)),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
-            # end
             end = time.time()
             fps = 1 / (end - start)
             fps = "%.2f fps" % fps
