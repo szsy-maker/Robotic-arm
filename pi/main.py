@@ -40,13 +40,15 @@ pwm_4 = GPIO.PWM(servo_4, fPWM)
 pwm_4.start(0)
 
 list_pwm = [None, pwm_1, pwm_2, pwm_3, pwm_4]  # pwm列表
-list_max = [None, 135, 150, 150, 180]  # 对应最大角度
-list_min = [None, 45, 30, 30, 0]  # 对应最小角度
-list_angle = [None, 45, 90, 90, 0]  # 角度集合，即为初始设置角度
+list_max = [None, 140, 150, 150, 180]  # 对应最大角度
+list_min = [None, 40, 30, 30, 0]  # 对应最小角度
+list_angle = [None, 40, 90, 90, 0]  # 角度集合，即为初始设置角度
+list_int = [None, 40, 90, 90, 0]  # 角度集合，即为初始设置角度
 data_list = [None for i in range(6)]  # 传输数据集合
 
 n_servo = 0  # 设定舵机
 angle_step = 2  # 设定舵机每次调整角度
+angle_Decimal = 20
 
 
 def math_180(d):
@@ -64,48 +66,53 @@ def angle_change():
     global list_min
     global data_list
     global list_angle
+    global list_int
     print(n_servo)
     print(list_angle)
+    for i in range(1, 4):
+        list_int[i] = list_angle[i] / angle_Decimal * angle_Decimal
+        print(list_int)
     if n_servo == 0:
         if data_list[6] == -1:
             step1.forward(0.0001, 100)
         if data_list[6] == 1:
             step1.backward(0.0001, 100)
-    elif n_servo == 1:
-        if data_list[6] == -1:
-            if list_angle[n_servo] > list_min[n_servo]:
-                list_angle[n_servo] -= angle_step
-                list_pwm[n_servo].ChangeDutyCycle(math_270(list_angle[n_servo]))
-            else:
-                list_pwm[n_servo].ChangeDutyCycle(0)
-        elif data_list[6] == 1:
-            if list_angle[n_servo] < list_max[n_servo]:
-                list_angle[n_servo] += angle_step
-                list_pwm[n_servo].ChangeDutyCycle(math_270(list_angle[n_servo]))
-            else:
-                list_pwm[n_servo].ChangeDutyCycle(0)
-        else:
-            list_pwm[n_servo].ChangeDutyCycle(0)
+    # elif n_servo == 1:
+    #     if data_list[6] == -1:
+    #         if list_angle[n_servo] > list_min[n_servo]:
+    #             list_angle[n_servo] -= angle_step
+    #             list_pwm[n_servo].ChangeDutyCycle(math_270(list_angle[n_servo]))
+    #         else:
+    #             list_pwm[n_servo].ChangeDutyCycle(0)
+    #     elif data_list[6] == 1:
+    #         if list_angle[n_servo] < list_max[n_servo]:
+    #             list_angle[n_servo] += angle_step
+    #             list_pwm[n_servo].ChangeDutyCycle(math_270(list_angle[n_servo]))
+    #         else:
+    #             list_pwm[n_servo].ChangeDutyCycle(0)
+    #     else:
+    #         list_pwm[n_servo].ChangeDutyCycle(0)
     else:
         if data_list[6] == -1:
             if list_angle[n_servo] > list_min[n_servo]:
                 list_angle[n_servo] -= angle_step
-                list_pwm[n_servo].ChangeDutyCycle(math_180(list_angle[n_servo]))
+                list_pwm[n_servo].ChangeDutyCycle(math_180(list_int[n_servo]))
             else:
                 list_pwm[n_servo].ChangeDutyCycle(0)
         elif data_list[6] == 1:
             if list_angle[n_servo] < list_max[n_servo]:
                 list_angle[n_servo] += angle_step
-                list_pwm[n_servo].ChangeDutyCycle(math_180(list_angle[n_servo]))
+                list_pwm[n_servo].ChangeDutyCycle(math_180(list_int[n_servo]))
             else:
                 list_pwm[n_servo].ChangeDutyCycle(0)
         else:
             list_pwm[n_servo].ChangeDutyCycle(0)
 
+
 def main():
     global n_servo
     global data_list
-    client1 = Recive('192.168.3.57', 12345) #填写PC端的ip地址
+    client1 = Recive('192.168.3.57', 12345)  # 填写PC端的ip地址
     client1.Setup()
     while True:
         data_list = client1.Data_List()
@@ -115,7 +122,7 @@ def main():
 
 if __name__ == '__main__':
     list_pwm[1].ChangeDutyCycle(math_270(list_angle[1]))
-    for i in range(2, 4):
+    for i in range(1, 4):
         list_pwm[i].ChangeDutyCycle(math_180(list_angle[i]))
     time.sleep(2)
     pwm_1.ChangeDutyCycle(0)
