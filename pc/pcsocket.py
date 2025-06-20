@@ -20,6 +20,7 @@ class Socket():
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         server_socket.bind((self.host, self.port))
+
         server_socket.listen(1)  # 使服务器开始监听连接请求
         print("等待客户端连接...")
         self.conn, self.address = server_socket.accept()
