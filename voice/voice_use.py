@@ -1,4 +1,4 @@
-import voice__cmd__recongnize
+import voice_cmd_recongnize
 import pyaudio
 CONFIG = {
     "APP_ID": "33572742",
@@ -25,7 +25,7 @@ COMMAND_MAP = {
     "右转": ["右"]
 }
 
-recognizer = voice_use.VoiceCommandRecognizer(CONFIG, AUDIO_PARAMS, COMMAND_MAP)
+recognizer = (voice_cmd_recongnize.VoiceCommandRecognizer(CONFIG, AUDIO_PARAMS, COMMAND_MAP))
 # 单次调用示例
 result = recognizer.indentify()
 print(f"结果: {result}")

@@ -64,14 +64,15 @@ if __name__ == "__main__":
     send1 = Connect(uid, topic)
     send1.ConnTCP()
 
-# 测试输出模式
-#     send1.Get_Message()
-# while True:
-#     print(send1.Out_put())
-
-# 测试输入模式
-while True:
-    test_list = [0, 1, 2, 3, 4, 5]
-    i += 1
-    send1.Send_Message(test_list[i % 6])
-    time.sleep(1)
+    # 测试输出模式
+    #     send1.Get_Message()
+    # while True:
+    #     print(send1.Out_put())
+    #
+    # 测试输入模式
+    i = 0
+    while True:
+        test_list = [0, 1, 2, 3, 4, 5]
+        i += 1
+        send1.Send_Message(test_list[i % 6])
+        time.sleep(1)
