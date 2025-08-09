@@ -1,4 +1,4 @@
-import voice_cmd_recongnize
+from new.pc_voice_bemfa import voice_cmd_recongnize
 import pyaudio
 CONFIG = {
     "APP_ID": "33572742",

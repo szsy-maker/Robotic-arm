@@ -1,6 +1,5 @@
-import bemfa
 import time
-import voice_cmd_recongnize
+from new.pc_voice_bemfa import voice_cmd_recongnize, bemfa
 import pyaudio
 
 # bafa
