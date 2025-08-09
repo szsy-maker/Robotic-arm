@@ -23,7 +23,6 @@ CONFIG = {
 }
 # 音频参数配置（可选）
 AUDIO_PARAMS = {
-    'FORMAT': pyaudio.paInt16,
     'CHANNELS': 1,
     'RATE': 16000,
     'CHUNK': 1024,
@@ -41,6 +40,7 @@ COMMAND_MAP = {
     "左转": ["左", "做", "坐", "作"],
     "右转": ["右", "有", "又", ]
 }
+
 while True:
     recognizer = (voice_cmd_recongnize.VoiceCommandRecognizer(CONFIG, AUDIO_PARAMS, COMMAND_MAP))
     # 单次调用示例

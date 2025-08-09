@@ -5,15 +5,14 @@ import math
 import bemfa
 
 class Mediapipe():
-    def __init__(self, joint_list, state_num, host, port):
+    def __init__(self, joint_list, state_num, uid, topic):
         self.joint_list = joint_list
         self.state_num = state_num
-        self.host = host
-        self.port = port
+        self.uid = uid
+        self.topic = topic
         #bemfa
         uid = "0742b4ae2f2c4e1a8ef41a715647bec8"
         topic = "raspi"
-        i = 5
         self.send1 = bemfa.Connect(uid, topic)
         self.send1.ConnTCP()
 
@@ -57,7 +56,8 @@ class Mediapipe():
     def Start(self):
         with self.mp_hand.Hands(min_detection_confidence=0.7,
                            max_num_hands=1,
-                           min_tracking_confidence=0.7) as holistic:
+                           min_tracking_confidence=0.7,
+                           model_complexity=0) as holistic:
             while self.cap.isOpened:
                 success, self.image = self.cap.read()
                 if not success:

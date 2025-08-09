@@ -64,7 +64,7 @@ if __name__ == "__main__":
     send1 = Connect(uid, topic)
     send1.ConnTCP()
 
-    #测试输出模式
+    # 测试输出模式
     send1.Get_Message()
     while True:
         print(send1.Out_put())
