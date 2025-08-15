@@ -5,7 +5,7 @@
 - 通信协议 --> sokect
 - 互联网+框架 --> [参考巴法云](https://bemfa.com/)
 - 输出硬件接口 --> ~~前舵机控制RPi.GPIO​​~~ 现舵机控制Arm_Lib Oled显示 Adafruit_SSD1306 PIL
-- 语音识别 --> 百度aip pyaudio 
+- 语音识别 --> 百度aoi pyaudio 
 - 数据处理 --> re numpy ast
 ---
 ## 变动
