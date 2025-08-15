@@ -6,7 +6,7 @@
 - 互联网+框架 --> [参考巴法云](https://bemfa.com/)
 - 输出硬件接口 --> ~~前舵机控制RPi.GPIO​​~~ 现舵机控制Arm_Lib Oled显示 Adafruit_SSD1306 PIL
 - 语音识别 --> 百度aip pyaudio 
-- 数据处理 re numpy ast
+- 数据处理 --> re numpy ast
 ---
 ## 变动
 - 2024.6.9立项
@@ -39,6 +39,5 @@
 - `pip install -r requirements.txt`
 - ~~混乱的requirements~~
 <p>还在改进:(<p>
-
 
 
